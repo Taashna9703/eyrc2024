@@ -48,10 +48,22 @@ class WayPointServer(Node):
         self.max_values = [2000, 2000, 2000]
         self.min_values = [1000, 1000, 1000]
 
+        #old VALUES
+        # kp= [300, 450, 985]
+        # ki= [0, 0, 2]
+        # kd= [100, 150, 48]
+        
+
+
+         #NEW VALUES
+        # self.Kp = [6,12, 61, 0]
+        # self.Ki = [0.001, 0.001, 0.01, 0]
+        # self.Kd = [2, 3, 37 ,0]
+
         #Kp, Ki and Kd values here
-        self.Kp = [9, 13.5, 33.6]
-        self.Ki = [0, 0, 0.016]
-        self.Kd = [60,90,39]
+        self.Kp = [6,12, 61, 0]
+        self.Ki = [0.001, 0.001, 0.01, 0]
+        self.Kd = [2, 3, 37 ,0]
 
         self.initial_yaw_value = 1500  # Set the initial yaw value here
         
@@ -130,28 +142,49 @@ class WayPointServer(Node):
 
         self.dtime = msg.header.stamp.sec
 
+    # def altitude_set_pid(self, alt):
+    #     self.Kp[1] = alt.kp * 1.0 
+    #     self.Ki[1] = alt.ki * 0.001
+    #     self.Kd[1] = alt.kd * 1.0
+
+    # #Define callback function like altitide_set_pid to tune pitch, roll
+    # #and yaw PID values
+    # def pitch_set_pid(self, pitch):
+    #     self.Kp[0] = pitch.kp * 1.0
+    #     self.Ki[0] = pitch.ki * 0.001
+    #     self.Kd[0] = pitch.kd * 1.0
+
+    # def roll_set_pid(self, roll):
+    #     self.Kp[2] = roll.kp * 1.0
+    #     self.Ki[2] = roll.ki * 0.001
+    #     self.Kd[2] = roll.kd * 1.0
+
+    # def yaw_set_pid(self, yaw):
+    #     self.Kp[3] = yaw.kp * 1.0
+    #     self.Ki[3] = yaw.ki * 0.001
+    #     self.Kd[3] = yaw.kd * 1.0
+
     def altitude_set_pid(self, alt):
-        self.Kp[1] = alt.kp * 1.0 
-        self.Ki[1] = alt.ki * 0.001
-        self.Kd[1] = alt.kd * 1.0
+        self.Kp[1] = self.Kp[1] * 1.0 
+        self.Ki[1] = self.Ki[1] * 0.001
+        self.Kd[1] =self.Kd[1] * 1.0
 
     #Define callback function like altitide_set_pid to tune pitch, roll
     #and yaw PID values
     def pitch_set_pid(self, pitch):
-        self.Kp[0] = pitch.kp * 1.0
-        self.Ki[0] = pitch.ki * 0.001
-        self.Kd[0] = pitch.kd * 1.0
+        self.Kp[0] = self.Kp[0] * 1.0
+        self.Ki[0] = self.Ki[0] * 0.001
+        self.Kd[0] = self.Kd[0] * 1.0
 
     def roll_set_pid(self, roll):
-        self.Kp[2] = roll.kp * 1.0
-        self.Ki[2] = roll.ki * 0.001
-        self.Kd[2] = roll.kd * 1.0
+        self.Kp[2] = self.Kp[2] * 1.0
+        self.Ki[2] = self.Ki[2] * 0.001
+        self.Kd[2] = self.Kd[2]* 1.0
 
     def yaw_set_pid(self, yaw):
-        self.Kp[3] = yaw.kp * 1.0
-        self.Ki[3] = yaw.ki * 0.001
-        self.Kd[3] = yaw.kd * 1.0
-
+        self.Kp[3] = self.Kp[3] * 1.0
+        self.Ki[3] = self.Ki[3] * 0.001
+        self.Kd[3] = self.Kd[3] * 1.0
 
     def odometry_callback(self, msg):
         orientation_q = msg.pose.pose.orientation
